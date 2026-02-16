@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kuyaLloyd To do</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <h1>kuyalloyd To do App</h1>
+            <p class="subtitle">Build a functional To-Do List</p>
+            
+            <div class="features-list">
+                <div class="feature-item">
+                    <span class="checkmark">✓</span>
+                    <span>Add new tasks</span>
+                </div>
+                <div class="feature-item">
+                    <span class="checkmark">✓</span>
+                    <span>Mark tasks as complete</span>
+                </div>
+                <div class="feature-item">
+                    <span class="checkmark">✓</span>
+                    <span>Delete tasks</span>
+                </div>
+            </div>
+
+            <p class="tech-info">Technologies: HTML for structure, CSS for styling, and JS for logic</p>
+
+            <div class="progress-box">
+                <div class="progress-header">
+                    <span class="progress-label">Progress</span>
+                    <span class="progress-percent" id="progressPercent">0%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="progressText">0 of 0 tasks completed</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="input-section">
+                <div class="input-group">
+                    <input
+                        type="text"
+                        id="taskInput"
+                        placeholder="Task title..."
+                        class="task-input"
+                    >
+                    <textarea
+                        id="taskDescription"
+                        placeholder="Task description (optional)..."
+                        class="task-description-input"
+                        rows="3"
+                    ></textarea>
+                </div>
+                <button id="addBtn" class="add-btn">Add Task</button>
+            </div>
+
+            <div class="tasks-grid" id="taskList">
+            </div>
+
+            <div id="emptyState" class="empty-add-card show">
+                <div class="add-icon">+</div>
+                <p>Add New Task</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
