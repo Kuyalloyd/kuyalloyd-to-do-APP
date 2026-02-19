@@ -4,7 +4,56 @@ const taskDescription = document.getElementById('taskDescription');
 const addBtn = document.getElementById('addBtn');
 const emptyState = document.getElementById('emptyState');
 
-let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+// Storage manager that tries localStorage first, then sessionStorage, then memory
+const StorageManager = {
+    storageType: null,
+    
+    init() {
+        // Try localStorage
+        if (this.isAvailable('localStorage')) {
+            this.storageType = 'localStorage';
+        } 
+        // Fallback to sessionStorage
+        else if (this.isAvailable('sessionStorage')) {
+            this.storageType = 'sessionStorage';
+        }
+        // If neither works, just use in-memory (won't persist)
+        else {
+            this.storageType = 'memory';
+        }
+    },
+    
+    isAvailable(type) {
+        try {
+            const test = '__test__';
+            const storage = type === 'localStorage' ? localStorage : sessionStorage;
+            storage.setItem(test, test);
+            storage.removeItem(test);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    },
+    
+    getItem(key) {
+        if (this.storageType === 'localStorage') return localStorage.getItem(key);
+        if (this.storageType === 'sessionStorage') return sessionStorage.getItem(key);
+        return null;
+    },
+    
+    setItem(key, value) {
+        try {
+            if (this.storageType === 'localStorage') localStorage.setItem(key, value);
+            else if (this.storageType === 'sessionStorage') sessionStorage.setItem(key, value);
+        } catch (e) {
+            console.warn('Storage failed:', e);
+        }
+    }
+};
+
+StorageManager.init();
+
+let tasks = JSON.parse(StorageManager.getItem('tasks')) || [];
 
 document.addEventListener('DOMContentLoaded', () => {
     addBtn.addEventListener('click', addTask);
@@ -115,7 +164,7 @@ function updateStats() {
 }
 
 function saveTasks() {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    StorageManager.setItem('tasks', JSON.stringify(tasks));
 }
 
 function escapeHtml(text) {
